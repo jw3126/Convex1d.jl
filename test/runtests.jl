@@ -1,7 +1,8 @@
 using Convex1d
 using Test
+using Random
 
-@testset "minimize" begin
+@testset "minimize" rng=Xoshiro(0x1234) begin
     res = @inferred minimize(x -> x^2, (-1.1, 1), atol=1e-3)
     @test res.minimizer ≈ 0 atol=1e-3
     @test res.minimum === res.minimizer^2
@@ -55,13 +56,13 @@ using Test
     end
 end
 
-@testset "minimize no domain" begin
+@testset "minimize no domain" rng=Xoshiro(0x5678) begin
     for scale in [10^x for x in -10.0:10.0]
         x_opt = scale*randn()
         f = x -> abs(x - x_opt)
         x_lo, x_hi = Convex1d.find_initial_domain(f)
         @test x_lo <= x_opt <= x_hi
-        @test x_hi - x_lo < 8*(scale+1)
+        @test x_hi - x_lo < 8*(abs(x_opt)+1)
         sol = minimize(f, atol=sqrt(eps(scale)))
         @test sol.minimizer ≈ x_opt atol=sqrt(eps(scale))
     end
