@@ -1,7 +1,7 @@
 name = "Convex1d"
 uuid = "d65ab6ab-6660-44ea-a7a3-f3acdcb1c2e6"
 authors = ["Jan Weidner <jw3126@gmail.com>"]
-version = "0.2.0"
+version = "0.1.1"
 
 [compat]
 julia = "1.11"
